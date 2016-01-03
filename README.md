@@ -38,3 +38,22 @@ $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 (new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")))->runMissingMigrations();
 ```
 
+
+### Extending/Running Tests
+
+There is a set of Unit and Integration Tests ensuring the basic functionality of dbmigrate stays intact. To run them you will need
+
+* Linux/MacOS
+* Docker 1.8 or higher
+* PHP 5.6 or higher
+
+Running the tests is just a matter of
+
+```bash
+composer install
+make tests
+```
+
+**Note For Linux Users:** Docker works a bit different on MacOS than on Linux. This is important to know as the IP address of Docker
+containers on Mac is dynamic, where it is always 127.0.0.1 on Linux. To have the Makefile work on Linux, just change the occurences
+of `docker-machine ip default` to `127.0.0.1`

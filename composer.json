@@ -6,7 +6,7 @@
     "phpunit/phpunit": "5.0.9",
     "phake/phake": "2.2.0"
   },
-  "license": "BSD",
+  "license": "MIT",
   "authors": [
     {
       "name": "Matthias Huttar",
