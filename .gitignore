@@ -1,0 +1,11 @@
+.idea/
+*.iml
+*.ipr
+build.tar
+*.iws
+.DS_Store
+production_constants.php
+test-output/
+/app-optimized
+/node_modules
+/vendor

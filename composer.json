@@ -1,0 +1,28 @@
+{
+  "name": "mhuttar/dbmigrate",
+  "description": "A Database Migration Tool Similar to Flyway",
+  "type": "library",
+  "require-dev": {
+    "phpunit/phpunit": "5.0.9",
+    "phake/phake": "2.2.0"
+  },
+  "license": "BSD",
+  "authors": [
+    {
+      "name": "Matthias Huttar",
+      "email": "mhuttar@olx.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "dbmigrate\\": "src/php"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "dbmigrate\\": "test/php"
+    }
+  }
+}
