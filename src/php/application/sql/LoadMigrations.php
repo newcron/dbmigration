@@ -28,7 +28,7 @@ class LoadMigrations
         $result = $this->pdo->query("select * from installed_migrations")->fetchAll();
 
         return array_map(function($object){
-            return new Migration($object["id"], new \DateTime($object["installation_time"]), $object["migration_file_name"], $object["migration_file_checksum"], (bool)$object["success"]);
+            return new Migration($object["id"], new \DateTime($object["installation_time"]), $object["migration_file_name"], $object["migration_file_checksum"], $object["success"]==="true");
         }, $result);
     }
 
