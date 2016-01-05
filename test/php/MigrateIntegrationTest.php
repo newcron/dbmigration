@@ -18,7 +18,7 @@ class MigrateTest extends \PHPUnit_Framework_TestCase
     {
         $pdo = $this->aNewInitializedSchema();
 
-        (new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/nummericsorting")))->runMissingMigrations();
+        call_user_func(new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/nummericsorting")));
 
         $migrations = (new LoadMigrations($pdo))->allInstalledMigrations();
         $this->assertEquals("v3_test.sql", $migrations[0]->getFilename());
@@ -30,8 +30,8 @@ class MigrateTest extends \PHPUnit_Framework_TestCase
 
         $pdo = $this->aNewInitializedSchema();
 
-        (new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/incremental/step1")))->runMissingMigrations();
-        (new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/incremental/step2")))->runMissingMigrations();
+        call_user_func(new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/incremental/step1")));
+        call_user_func(new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/incremental/step2")));
 
         $migrations = (new LoadMigrations($pdo))->allInstalledMigrations();
         $this->assertEquals("v3_test.sql", $migrations[0]->getFilename());
@@ -44,7 +44,7 @@ class MigrateTest extends \PHPUnit_Framework_TestCase
         $pdo = $this->aNewInitializedSchema();
 
         try {
-            (new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/failing")))->runMissingMigrations();
+            call_user_func(new Migrate($pdo, new \SplFileInfo(__DIR__ . "/../testsets/failing")));
             $this->fail("should throw an exception");
         } catch(MigrationException $e) {
             // expected

@@ -12,7 +12,7 @@ class InitializeIntegrationTest extends PHPUnit_Framework_TestCase
     public function testInitializeCreatesExactlyOneTable()
     {
         $pdo = $this->aNewSchema();
-        (new Initialize($pdo))->createInstalledMigrationsTable();
+        call_user_func(new Initialize($pdo));
 
         $this->assertEquals(1, $pdo->query("show tables;")->rowCount());
     }
@@ -20,7 +20,7 @@ class InitializeIntegrationTest extends PHPUnit_Framework_TestCase
     public function testInitializeCreatesInfoTable()
     {
         $pdo = $this->aNewSchema();
-        (new Initialize($pdo))->createInstalledMigrationsTable();
+        call_user_func(new Initialize($pdo));
 
         $this->assertEquals("installed_migrations", $pdo->query("show tables;")->fetchColumn(0));
     }

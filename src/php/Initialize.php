@@ -22,7 +22,7 @@ class Initialize
     }
 
 
-    public function createInstalledMigrationsTable()
+    public function __invoke()
     {
         $this->migrationTablePresenceConstraint->assertTableMissing();
         $this->runMigration->run(new SqlFile(new \SplFileInfo(__DIR__ . "/../sql/init.sql")));

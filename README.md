@@ -20,7 +20,7 @@ time you run the migration tool, you'll need to *Initialize* it (generating that
 ```php
 $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 
-(new \dbmigrate\Initialize($pdo))->createInstalledMigrationsTable();
+call_user_func(new \dbmigrate\Initialize($pdo));
 ```
 
 ##### Running Migrations (on every deployment)
@@ -35,7 +35,7 @@ If multiple migrations have to be installed at once, the order in which they are
 ```php
 $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 
-(new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")))->runMissingMigrations();
+call_user_func(new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")));
 ```
 
 

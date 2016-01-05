@@ -23,7 +23,7 @@ trait IntegrationDatabase
     public function aNewInitializedSchema() {
         $pdo = $this->aNewSchema();
 
-        (new Initialize($pdo))->createInstalledMigrationsTable();
+        (new Initialize($pdo))->__invoke();
 
         return $pdo;
     }

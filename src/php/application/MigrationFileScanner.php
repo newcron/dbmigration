@@ -17,9 +17,7 @@ class MigrationFileScanner
      */
     public function __construct(\SplFileInfo $scanDir)
     {
-        if (!$scanDir->isDir() || !is_readable($scanDir->getPathname())) {
-            throw new \InvalidArgumentException("Passed dir " . $scanDir->getPathname() . " is not a dir or not readable");
-        }
+        (new MigrationDirectoryValidator())->assertValidMigrationFileDirectory($scanDir);
         $this->scanDir = $scanDir;
     }
 

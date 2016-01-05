@@ -25,7 +25,7 @@ class MigrationTablePresenceConstraintIntegrationTest extends \PHPUnit_Framework
     {
         $pdo = $this->aNewSchema();
 
-        (new Initialize($pdo))->createInstalledMigrationsTable();
+        (new Initialize($pdo))->__invoke();
 
         (new MigrationTablePresenceConstraint($pdo))->assertTablePresent();
     }

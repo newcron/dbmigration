@@ -4,6 +4,7 @@
 namespace dbmigrate;
 
 
+use dbmigrate\application\MigrationDirectoryValidator;
 use dbmigrate\application\MigrationException;
 use dbmigrate\application\MigrationFileScanner;
 use dbmigrate\application\Planner;
@@ -30,18 +31,14 @@ class Migrate
         if($pdo === null) {
             throw new \InvalidArgumentException("PDO may not be null");
         }
-        if($sqlDirectory===null) {
-            throw new \InvalidArgumentException("sqlDirectory may not be null");
-        }
 
-        if(!$sqlDirectory->isDir() || !is_readable($sqlDirectory->getPathname())) {
-            throw new \InvalidArgumentException("sqlDirectory ".$sqlDirectory->getPathname()." does not exist or is not readable");
-        }
+        (new MigrationDirectoryValidator())->assertValidMigrationFileDirectory($sqlDirectory);
+
         $this->pdo = $pdo;
         $this->sqlDirectory = $sqlDirectory;
     }
 
-    public function runMissingMigrations() {
+    public function __invoke() {
         $fileScanner = new MigrationFileScanner($this->sqlDirectory);
         $loadMigrations = new LoadMigrations($this->pdo);
         $migrationsToInstall = (new Planner($fileScanner, $loadMigrations))->findMigrationsToInstall();
