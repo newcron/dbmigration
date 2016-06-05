@@ -66,6 +66,23 @@ $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 call_user_func(new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")));
 ```
 
+##### Dry-Running Migrations
+
+If you just want to know if your new migration *would* be going to be installed, you can perform a
+dry run. It will not alter your database in any way, but it will tell you which migrations were
+going to be installed, if you would run a migration now.
+
+To perform a Dry-Run:
+
+```php
+$pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
+
+$installedMigrations = call_user_func(new \dbmigrate\MigrateDryRun($pdo, new \SplFileInfo("/path/to/your/sql/folder")));
+
+var_dump($installedMigrations);
+```
+
+
 ### Resolving Errors
 
 When doing migrations, there are two things in which dbmigrate purposely breaks. In both
@@ -100,7 +117,7 @@ There are two ways to resolve that situation:
 
 * Revert the old migration file so that the checksum is the same again
 * Review the migration file and the state of the database - if there's no difference, just update the record in *installed_migrations* to the
-  new checksum. 
+  new checksum.
 
 ### Extending/Running Tests
 
