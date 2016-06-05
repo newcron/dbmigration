@@ -20,10 +20,6 @@ class MigrateDryRun
 
     public function __construct(\PDO $pdo, \SplFileInfo $sqlDirectory)
     {
-        if ($pdo === null) {
-            throw new \InvalidArgumentException("PDO may not be null");
-        }
-
         (new MigrationDirectoryValidator())->assertValidMigrationFileDirectory($sqlDirectory);
 
         $this->pdo = $pdo;
