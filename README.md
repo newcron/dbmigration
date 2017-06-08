@@ -116,8 +116,7 @@ state or not.
 There are two ways to resolve that situation:
 
 * Revert the old migration file so that the checksum is the same again
-* Review the migration file and the state of the database - if there's no difference, just update the record in *installed_migrations* to the
-  new checksum.
+* Review the migration file and the state of the database - if there's no difference, just update the record in *installed_migrations* to the new checksum.
 
 ### Extending/Running Tests
 
