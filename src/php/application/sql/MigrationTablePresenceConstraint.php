@@ -40,7 +40,7 @@ class MigrationTablePresenceConstraint
     private function countRows()
     {
         return $this->pdo
-            ->query("select count(*) from information_schema.tables where table_name = 'tbl_user_group';")
+            ->query("select count(*) from information_schema.tables where table_name = 'installed_migrations';")
             ->fetchColumn();
     }
 }
