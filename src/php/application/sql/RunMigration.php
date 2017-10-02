@@ -27,17 +27,20 @@ class RunMigration
 
     public function run(SqlFile $file)
     {
-        $statement = $this->pdo->prepare($file->getContents());
+        $this->pdo->beginTransaction();
+
         try {
-            $result = $statement->execute();
+            $result = $this->pdo->query($file->getContents());
             if ($result === false) {
+                $this->pdo->rollBack();
                 throw new \Exception("Query Returned " . var_export($this->pdo->errorInfo(), true));
             }
         } catch (\Exception $e) {
-            throw new MigrationException("Running SQL File " . $file->getFile()->getPathname() . " failed.", $e);
-        } finally {
-            $statement->closeCursor();
+            $this->pdo->rollBack();
+            throw new MigrationException("Error running SQL File " . $file->getFile()->getPathname() . " failed: ".$e->getMessage(), $e);
         }
+
+        $this->pdo->commit();
     }
 
 }

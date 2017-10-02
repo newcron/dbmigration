@@ -71,6 +71,10 @@ $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 call_user_func(new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")));
 ```
 
+All the sql files in the "/path/to/your/sql/folder" directory will be read and run against the
+database. Each file will be run inside a single transaction, if anything within that file
+fails then all commands in that file will be rolled back.
+
 ##### Dry-Running Migrations
 
 If you just want to know if your new migration *would* be going to be installed, you can perform a
