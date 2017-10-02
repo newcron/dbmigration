@@ -12,6 +12,7 @@ use dbmigrate\application\schema\Migration;
 use dbmigrate\application\sql\LoadMigrations;
 use dbmigrate\application\sql\LogMigration;
 use dbmigrate\application\sql\RunMigration;
+use PDO;
 
 class Migrate
 {
@@ -28,6 +29,7 @@ class Migrate
      */
     public function __construct(\PDO $pdo, \SplFileInfo $sqlDirectory)
     {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         (new MigrationDirectoryValidator())->assertValidMigrationFileDirectory($sqlDirectory);
 

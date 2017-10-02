@@ -26,6 +26,8 @@ class Initialize
 
     public function __construct(\PDO $pdo)
     {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         $this->databaseEngine = strtolower($pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
         $this->runMigration = new RunMigration($pdo);
         $this->migrationTablePresenceConstraint = new MigrationTablePresenceConstraint($pdo);
