@@ -4,5 +4,5 @@ create table installed_migrations (
   migration_file_name varchar(255) NOT NULL,
   migration_file_checksum varchar(32) NOT NULL,
   success boolean,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (id)
 )
