@@ -1,4 +1,4 @@
-# dbmigrate - Database Migration Tool for MySQL
+# dbmigrate - Database Migration Tool
 
 dbmigrate is a simple utility to automate changes to your database (schema and contents). This tool is typically
 helpful for automating code deployments or in scenarios, where it is necessary to audit database changes. It's an alternative
@@ -7,6 +7,11 @@ that focus on automatically keeping a database in sync with the domain model. If
 in your hands and like the simplicity of versioned SQL files, then this tool might be just right for you.
 
 dbmigrate is heavily inspired from [Flyway](http://flywaydb.org/).
+
+dbmigrate currently supports these database engines:
+
+* MySQL
+* PostgreSQL
 
 ### How does it work
 
@@ -65,6 +70,10 @@ $pdo = new PDO("mysql:host=yourdbhost;database=yourdb", "youruser", "yourpass");
 
 call_user_func(new \dbmigrate\Migrate($pdo, new \SplFileInfo("/path/to/your/sql/folder")));
 ```
+
+All the sql files in the "/path/to/your/sql/folder" directory will be read and run against the
+database. Each file will be run inside a single transaction, if anything within that file
+fails then all commands in that file will be rolled back.
 
 ##### Dry-Running Migrations
 

@@ -39,12 +39,8 @@ class MigrationTablePresenceConstraint
      */
     private function countRows()
     {
-
-        $statement = $this->pdo->query("show tables like \"installed_migrations\";");
-        try {
-            return $statement->rowCount();
-        } finally {
-            $statement->closeCursor();
-        }
+        return $this->pdo
+            ->query("select count(*) from information_schema.tables where table_name = 'installed_migrations';")
+            ->fetchColumn();
     }
 }

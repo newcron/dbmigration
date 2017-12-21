@@ -9,6 +9,7 @@ use dbmigrate\application\MigrationFileScanner;
 use dbmigrate\application\Planner;
 use dbmigrate\application\sql\LoadMigrations;
 use dbmigrate\application\sql\SqlFile;
+use PDO;
 
 class MigrateDryRun
 {
@@ -20,6 +21,8 @@ class MigrateDryRun
 
     public function __construct(\PDO $pdo, \SplFileInfo $sqlDirectory)
     {
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
         (new MigrationDirectoryValidator())->assertValidMigrationFileDirectory($sqlDirectory);
 
         $this->pdo = $pdo;
