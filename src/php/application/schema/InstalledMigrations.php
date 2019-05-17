@@ -42,8 +42,8 @@ class InstalledMigrations
 
     private function validateChecksum(SqlFile $file, Migration $migration)
     {
-        if ($file->getHash() !== $migration->getChecksum()) {
-            throw new MigrationException("Migration " . $file->getFile()->getFilename() . " is already installed, but it's contents were modified afterwards. Checksum at installation time: " . $migration->getChecksum() . "; current checksum: " . $file->getHash());
+        if ($file->getHash() !== $migration->getChecksum() && $migration->getSuccess()) {
+            throw new MigrationException("Migration " . $file->getFile()->getFilename() . " was already successfully installed, but it's contents were modified afterwards. Checksum at installation time: " . $migration->getChecksum() . "; current checksum: " . $file->getHash());
         }
     }
 
