@@ -1,11 +1,8 @@
 <?php
 
-
 namespace dbmigrate\application\sql;
 
-
 use dbmigrate\application\MigrationException;
-use dbmigrate\application\sql\SqlFile;
 
 class RunMigration
 {
@@ -29,15 +26,29 @@ class RunMigration
     {
         $this->pdo->beginTransaction();
 
-        try {
-            $result = $this->pdo->query($file->getContents());
-            if ($result === false) {
-                $this->pdo->rollBack();
-                throw new \Exception("Query Returned " . var_export($this->pdo->errorInfo(), true));
+        $queries = explode(';', $file->getContents());
+
+        foreach ($queries as $query) {
+
+            $query = trim($query);
+
+            if (empty($query)) {
+                continue;
             }
-        } catch (\Exception $e) {
-            $this->pdo->rollBack();
-            throw new MigrationException("Error running SQL File " . $file->getFile()->getPathname() . " failed: ".$e->getMessage(), $e);
+
+            try {
+                $result = $this->pdo->query($query);
+                if ($result === false) {
+                    $this->pdo->rollBack();
+
+                    throw new \Exception("Query Returned " . var_export($this->pdo->errorInfo(), true));
+                }
+            } catch (\Exception $e) {
+                $this->pdo->rollBack();
+                throw new MigrationException(
+                    "Error running SQL File " . $file->getFile()->getPathname() . " failed: " . $e->getMessage(), $e
+                );
+            }
         }
 
         $this->pdo->commit();
