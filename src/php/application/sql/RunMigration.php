@@ -16,7 +16,9 @@ class RunMigration
 
     /**
      * ScriptRunner constructor.
-     * @param \PDO $pdo
+     *
+     * @param \PDO          $pdo
+     * @param QuerySplitter $querySplitter
      */
     public function __construct(\PDO $pdo, QuerySplitter $querySplitter)
     {
