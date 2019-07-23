@@ -8,8 +8,9 @@ class QuerySplitter
     {
         $sql = $this->removeComments($sql);
 
+        return explode(PHP_EOL."".PHP_EOL, $sql);
 
-        $splitQueries = [];
+        /*$splitQueries = [];
 
         if(!$delimiter) {
             $delimiter = $this->autodetectDelimiter($sql);
@@ -26,8 +27,7 @@ class QuerySplitter
             }
         }
 
-        return $splitQueries;
-
+        return $splitQueries;*/
     }
 
     /**
@@ -51,6 +51,4 @@ class QuerySplitter
 
         return $delimiter;
     }
-
-
 }
