@@ -4,30 +4,16 @@ namespace dbmigrate\application\sql;
 
 class QuerySplitter
 {
-    public function split($sql, $delimiter = null)
+    /**
+     * @param $sql
+     *
+     * @return array
+     */
+    public function split($sql)
     {
         $sql = $this->removeComments($sql);
 
-        return explode(PHP_EOL."".PHP_EOL, $sql);
-
-        /*$splitQueries = [];
-
-        if(!$delimiter) {
-            $delimiter = $this->autodetectDelimiter($sql);
-        }
-
-        $queries = explode($delimiter, $sql);
-
-        foreach ($queries as $query) {
-            $query = trim($query);
-            $query = trim($query, $delimiter);
-
-            if (!empty($query)) {
-                $splitQueries[] = $query;
-            }
-        }
-
-        return $splitQueries;*/
+        return array_values(array_filter(explode(PHP_EOL."".PHP_EOL, $sql)));
     }
 
     /**
@@ -39,16 +25,5 @@ class QuerySplitter
         $sql = preg_replace('@--.*?\n@is', '', $sql);
         $sql = preg_replace('@\/\*.*?\*\/@is', '', $sql);
         return $sql;
-    }
-
-    /**
-     * @return string
-     */
-    private function autodetectDelimiter($sql)
-    {
-        // TODO: Autodetect delimiter
-        $delimiter = ';';
-
-        return $delimiter;
     }
 }

@@ -26,6 +26,13 @@ class QuerySplitterTest extends \PHPUnit_Framework_TestCase
                     'select 2;',
                 ],
             ],
+            'two queries separate by multiple blank lines & comments' => [
+                'full' => "select 1;\n\n-- comment\n/* another comment */\n\nselect 2;",
+                'expectedSplit' => [
+                    'select 1;',
+                    'select 2;'
+                ]
+            ],
             'one query multiline' => [
                 'full' => "select \n 1",
                 'expectedSplit' => [
