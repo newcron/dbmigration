@@ -16,27 +16,20 @@ class QuerySplitterTest extends \PHPUnit_Framework_TestCase
             'single query should remove trailing semicolon' => [
                 'full' => "select 1;",
                 'expectedSplit' => [
-                    'select 1',
+                    'select 1;',
                 ],
             ],
-            'two queries' => [
-                'full' => "select 1; select 2",
+            'two queries separated by a blank line' => [
+                'full' => "select 1;\n\nselect 2;",
                 'expectedSplit' => [
-                    'select 1',
-                    'select 2',
+                    'select 1;',
+                    'select 2;',
                 ],
             ],
             'one query multiline' => [
                 'full' => "select \n 1",
                 'expectedSplit' => [
                     "select \n 1",
-                ],
-            ],
-            'two queries multiline' => [
-                'full' => "select 1;\nselect     \n2",
-                'expectedSplit' => [
-                    "select 1",
-                    "select     \n2",
                 ],
             ],
             '-- comments should be removed' => [
