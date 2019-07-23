@@ -10,15 +10,22 @@ class RunMigration
     private $pdo;
 
     /**
+     * @var QuerySplitter
+     */
+    private $querySplitter;
+
+    /**
      * ScriptRunner constructor.
      * @param \PDO $pdo
      */
-    public function __construct(\PDO $pdo)
+    public function __construct(\PDO $pdo, QuerySplitter $querySplitter)
     {
         if ($pdo === null) {
             throw new \InvalidArgumentException("PDO may not be null");
         }
         $this->pdo = $pdo;
+
+        $this->querySplitter = $querySplitter;
     }
 
 
@@ -26,15 +33,9 @@ class RunMigration
     {
         $this->pdo->beginTransaction();
 
-        $queries = explode(';', $file->getContents());
+        $queries = $this->querySplitter->split($file->getContents());
 
         foreach ($queries as $query) {
-
-            $query = trim($query);
-
-            if (empty($query)) {
-                continue;
-            }
 
             try {
                 $result = $this->pdo->query($query);
