@@ -11,7 +11,7 @@ class QuerySplitter
      */
     public function split($sql)
     {
-        $sql = $this->removeComments($sql);
+        $sql = $this->removeCommentsAndSpaces($sql);
 
         return array_values(array_filter(explode(PHP_EOL."".PHP_EOL, $sql)));
     }
@@ -20,10 +20,12 @@ class QuerySplitter
      * @param $sql
      * @return string|string[]|null
      */
-    private function removeComments($sql)
+    private function removeCommentsAndSpaces($sql)
     {
         $sql = preg_replace('@--.*?\n@is', '', $sql);
         $sql = preg_replace('@\/\*.*?\*\/@is', '', $sql);
+        /* Trim spaces on blank lines */
+        $sql = preg_replace('@^\s*\n@is', '', $sql);
         return $sql;
     }
 }
