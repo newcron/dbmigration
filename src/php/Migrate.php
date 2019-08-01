@@ -47,13 +47,11 @@ class Migrate
         foreach ($migrationsToInstall as $migration) {
             try {
                 $runMigration->run($migration);
+                $logMigration->logSuccess($migration);
             } catch(\Exception $e) {
-                $logMigration->logFailure($migration);
                 throw new MigrationException("Could not Execute Migration ".$migration->getFile()->getPathname(), $e);
             }
-            $logMigration->logSuccess($migration);
         }
-
     }
 
 
