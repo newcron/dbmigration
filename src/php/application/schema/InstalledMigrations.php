@@ -23,7 +23,7 @@ class InstalledMigrations
 
     public function needsToBeInstalled(SqlFile $file)
     {
-        return $this->isInstalledAndSuccessful($file) === null;
+        return !$this->isInstalledAndSuccessful($file);
     }
 
     /**
@@ -38,16 +38,11 @@ class InstalledMigrations
             if ($file->getFile()->getFilename() == $migration->getFilename()) {
                 $this->validateChecksum($file, $migration);
 
-                // Exclude successfully installed migrations
-                if($migration->getSuccess()){
-                    return null;
-                }
-
-                return $migration;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     private function validateChecksum(SqlFile $file, Migration $migration)
