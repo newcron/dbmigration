@@ -5,6 +5,7 @@ namespace dbmigrate;
 
 
 use dbmigrate\application\sql\MigrationTablePresenceConstraint;
+use dbmigrate\application\sql\QuerySplitter;
 use dbmigrate\application\sql\RunMigration;
 use dbmigrate\application\sql\SqlFile;
 use PDO;
@@ -29,7 +30,7 @@ class Initialize
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->databaseEngine = strtolower($pdo->getAttribute(PDO::ATTR_DRIVER_NAME));
-        $this->runMigration = new RunMigration($pdo);
+        $this->runMigration = new RunMigration($pdo, new QuerySplitter());
         $this->migrationTablePresenceConstraint = new MigrationTablePresenceConstraint($pdo);
     }
 
