@@ -23,27 +23,32 @@ class InstalledMigrations
 
     public function needsToBeInstalled(SqlFile $file)
     {
-        return $this->counterpartOf($file) === null;
+        return !$this->isInstalledAndSuccessful($file);
     }
 
-    /** @return Migration */
-    private function counterpartOf(SqlFile $file)
+    /**
+     * @param SqlFile $file
+     *
+     * @return Migration
+     * @throws MigrationException
+     */
+    private function isInstalledAndSuccessful(SqlFile $file)
     {
         foreach ($this->migrations as $migration) {
             if ($file->getFile()->getFilename() == $migration->getFilename()) {
                 $this->validateChecksum($file, $migration);
 
-                return $migration;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 
     private function validateChecksum(SqlFile $file, Migration $migration)
     {
         if ($file->getHash() !== $migration->getChecksum()) {
-            throw new MigrationException("Migration " . $file->getFile()->getFilename() . " is already installed, but it's contents were modified afterwards. Checksum at installation time: " . $migration->getChecksum() . "; current checksum: " . $file->getHash());
+            throw new MigrationException("Migration " . $file->getFile()->getFilename() . " was already installed (possibly failed), but it's contents were modified afterwards. Checksum at installation time: " . $migration->getChecksum() . "; current checksum: " . $file->getHash());
         }
     }
 
