@@ -22,7 +22,6 @@ class QuerySplitter
      */
     private function removeCommentsAndSpaces($sql)
     {
-        $sql = preg_replace('@--.*?\n@mis', '', $sql);
         $sql = preg_replace('@\/\*.*?\*\/@mis', '', $sql);
         /* Trim spaces on blank lines */
         $sql = preg_replace('@^\s*\n@mis', "\n", $sql);
