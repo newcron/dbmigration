@@ -35,8 +35,6 @@ are not yet logged in the *installed_migrations* table, execute them and store s
 There are some more things regarding the installation:
 
 1. If dbmigrate finds *several* SQL files that are not installed, it will sort them [naturally using natsort](http://php.net/manual/de/function.natsort.php) before running them.
-1. If running a migrations results in an SQL error, the result will be stored with *success=false*. Dbmigrate will not allow
-   to run any migration if an unsuccessful migration is found in database. (see the notes on resolving errors below).
 1. Besides the filename, dbmigrate also stores the checksum of the files content. It will fail if it detects that an already installed migration file has been altered after installation. (see the notes on resolving errors below).
 
 
